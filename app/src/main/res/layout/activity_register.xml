@@ -19,7 +19,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
 
         <TextView
             android:id="@+id/textView3"
@@ -43,16 +45,6 @@
             android:textColorHint="#979696" />
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/sora"
-            android:text="Senha"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,18 +53,6 @@
             android:text="Senha"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/etPasswordRegister2"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"
-            android:fontFamily="@font/sora"
-            android:hint="  Senha"
-            android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#979696" />
 
         <EditText
             android:id="@+id/etPasswordRegister"
@@ -95,18 +75,6 @@
             android:text="Confirmar senha"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/etConfirmPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"
-            android:fontFamily="@font/sora"
-            android:hint="  Confirmar senha"
-            android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#979696" />
 
         <EditText
             android:id="@+id/etConfirmPassword"
