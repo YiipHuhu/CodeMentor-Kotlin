@@ -75,9 +75,8 @@
                 android:id="@+id/switchKeepConnected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#949494"
-                android:buttonTint="#FFFFFF"
-                android:checked="true"
+                android:checked="false"
+                style="@style/CustomSwitch"
                 android:textColor="#FFFFFF" />
 
             <TextView
