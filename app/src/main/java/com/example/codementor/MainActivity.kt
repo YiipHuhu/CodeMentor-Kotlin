@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // Configuração das opções de navegação no menu lateral
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_gallery
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
