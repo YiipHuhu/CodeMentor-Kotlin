@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.codementor.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +59,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }
+                R.id.nav_about -> {
+                    //telinha de sobre
+                    startActivity(Intent(this, AboutActivity::class.java))
+                }
                 else -> {
                     // Caso contrário, deixar a navegação padrão lidar com o item
                     navController.navigate(menuItem.itemId)
@@ -74,37 +79,23 @@ class MainActivity : AppCompatActivity() {
     private fun updateHeader(navView: NavigationView) {
         val headerView = navView.getHeaderView(0)
         val headerNickname = headerView.findViewById<TextView>(R.id.nav_header_title)
-        val headerEmail = headerView.findViewById<TextView>(R.id.nav_header_email)
         val headerImage = headerView.findViewById<ImageView>(R.id.imageView)
 
         val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         headerNickname.text = sharedPreferences.getString("nickname", "Bem-vindo!")
-        headerEmail.text = sharedPreferences.getString("email", "email@example.com")
         val photoUri = sharedPreferences.getString("photoUri", null)
 
         if (!photoUri.isNullOrEmpty()) {
-            try {
-                val uri = Uri.parse(photoUri)
+            val uri = Uri.parse(photoUri)
+            val file = File(uri.path ?: "")
+
+            if (file.exists()) {
                 headerImage.setImageURI(uri)
-                headerImage.post {
-                    try {
-                        contentResolver.openInputStream(uri)?.use {
-                            Log.d("UpdateHeader", "Photo loaded successfully: $photoUri")
-                        }
-                    } catch (e: SecurityException) {
-                        Log.e("UpdateHeader", "SecurityException: ${e.message}")
-                        headerImage.setImageResource(R.drawable.default_profile_image)
-                    } catch (e: Exception) {
-                        Log.e("UpdateHeader", "Error loading photo: ${e.message}")
-                        headerImage.setImageResource(R.drawable.default_profile_image)
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("UpdateHeader", "Failed to set photo: ${e.message}")
-                headerImage.setImageResource(R.drawable.default_profile_image)
+            } else {
+                headerImage.setImageResource(R.drawable.ic_default_profile)
             }
         } else {
-            headerImage.setImageResource(R.drawable.default_profile_image)
+            headerImage.setImageResource(R.drawable.ic_default_profile)
         }
     }
 

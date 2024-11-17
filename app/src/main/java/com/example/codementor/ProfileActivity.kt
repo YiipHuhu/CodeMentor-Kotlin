@@ -1,13 +1,18 @@
 package com.example.codementor
 
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -50,19 +55,43 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val imageUri: Uri? = data.data
             if (imageUri != null) {
-                profileImageView.setImageURI(imageUri)
+                val localImageUri = copyImageToInternalStorage(imageUri)
+
+                // Atualizar ImageView com a nova imagem
+                profileImageView.setImageURI(localImageUri)
 
                 // Salvar URI da imagem no SharedPreferences
                 val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
                 sharedPreferences.edit()
-                    .putString("photoUri", imageUri.toString())
+                    .putString("photoUri", localImageUri.toString())
                     .apply()
             }
+        }
+    }
+
+    private fun copyImageToInternalStorage(imageUri: Uri): Uri? {
+        return try {
+            val resolver: ContentResolver = contentResolver
+            val inputStream: InputStream? = resolver.openInputStream(imageUri)
+
+            // Criar arquivo no diretório interno
+            val directory = getDir("profile_images", Context.MODE_PRIVATE)
+            val file = File(directory, "profile_image.jpg")
+
+            FileOutputStream(file).use { outputStream ->
+                inputStream?.copyTo(outputStream)
+            }
+
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            Log.e("ProfileActivity", "Erro ao copiar imagem: ${e.message}")
+            null
         }
     }
 }
