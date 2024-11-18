@@ -1,5 +1,6 @@
 package com.example.codementor
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -23,5 +24,10 @@ class ExplanationActivity : AppCompatActivity() {
         }
 
         setContentView(layoutId) // Define o layout da tela
+
+        findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.chatButton).setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
