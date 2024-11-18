@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import io.noties.markwon.Markwon
 
 data class ChatMessage(val message: String, val isUser: Boolean)
 
@@ -40,7 +41,9 @@ class ChatAdapter(private val messages: MutableList<ChatMessage>) :
         private val textMessage: TextView = itemView.findViewById(R.id.textMessage)
 
         fun bind(chatMessage: ChatMessage) {
-            textMessage.text = chatMessage.message
+            // Use Markwon para renderizar o texto em Markdown
+            val markwon = Markwon.create(itemView.context)
+            markwon.setMarkdown(textMessage, chatMessage.message)
         }
     }
 }
