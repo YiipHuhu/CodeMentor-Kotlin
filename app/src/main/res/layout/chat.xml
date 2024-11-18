@@ -6,15 +6,6 @@
 
     <!-- RecyclerView para exibir mensagens -->
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Esta IA não armazena o contexto anterior das mensagens"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"

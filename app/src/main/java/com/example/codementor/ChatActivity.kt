@@ -47,8 +47,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ChatAdapter
     private lateinit var editText: EditText
-    private var previousResponse: String = ""
     private lateinit var buttonSend: ImageButton
+    private val messageHistory = mutableListOf<Message>() // Lista para armazenar o histórico de mensagens
+
     private val api: ChatApi by lazy {
         Retrofit.Builder()
             .baseUrl("https://fast-radically-minnow.ngrok-free.app")
@@ -59,14 +60,12 @@ class ChatActivity : AppCompatActivity() {
     }
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS) // Tempo para estabelecer conexão
-            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS) // Tempo para ler os dados
-            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS) // Tempo para enviar os dados
-            // finalmente resolvido erro de timeout desse chat
-            .hostnameVerifier { _, _ -> true } // Ignora problemas com hostname
+            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .hostnameVerifier { _, _ -> true }
             .build()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,19 +82,20 @@ class ChatActivity : AppCompatActivity() {
         buttonSend.setOnClickListener {
             val userMessage = editText.text.toString().trim()
             if (userMessage.isNotEmpty()) {
+                val userMessageObject = Message(role = "user", id = generateMessageId(), content = userMessage)
+                messageHistory.add(userMessageObject) // Adiciona ao histórico
                 adapter.addMessage(ChatMessage(userMessage, true))
                 recyclerView.scrollToPosition(adapter.itemCount - 1)
                 editText.text.clear()
-                sendMessageToApi(userMessage)
+                sendMessageToApi()
             }
         }
     }
 
-    private fun sendMessageToApi(message: String) {
-        val context = mapOf("previous_response" to previousResponse)
+    private fun sendMessageToApi() {
         val chatRequest = ChatRequest(
-            context = context,
-            messages = listOf(Message(role = "user", id = "1", content = message)),
+            context = mapOf("previous_response" to getLastResponse()), // passa a ultima resposta como contexto
+            messages = messageHistory, // Envia todo o histórico
             temperature = 0.8,
             max_tokens = 1500
         )
@@ -107,10 +107,11 @@ class ChatActivity : AppCompatActivity() {
                     val aiMessage = response.choices.firstOrNull()?.message?.content
                         ?: "Resposta vazia da IA"
 
-                    // Atualize o contexto com a nova resposta da IA
-                    previousResponse = aiMessage
+                    // Adiciona a resposta da IA ao histórico
+                    val aiMessageObject = Message(role = "assistant", id = generateMessageId(), content = aiMessage)
+                    messageHistory.add(aiMessageObject)
 
-                    // Adicione a mensagem ao adapter
+                    // Adiciona a mensagem ao adapter
                     adapter.addMessage(ChatMessage(aiMessage, false))
                     recyclerView.scrollToPosition(adapter.itemCount - 1)
                 } else {
@@ -121,4 +122,15 @@ class ChatActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getLastResponse(): String {
+        // Retorna o conteúdo da última mensagem da IA, ou uma string vazia se não houver
+        return messageHistory.lastOrNull { it.role == "assistant" }?.content ?: ""
+    }
+
+    private fun generateMessageId(): String {
+        // Gera um ID único para cada mensagem (pode ser adaptado conforme necessário)
+        return System.currentTimeMillis().toString()
+    }
 }
+
