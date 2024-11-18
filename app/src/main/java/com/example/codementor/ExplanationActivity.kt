@@ -2,6 +2,7 @@ package com.example.codementor
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class ExplanationActivity : AppCompatActivity() {
@@ -28,6 +29,9 @@ class ExplanationActivity : AppCompatActivity() {
         findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.chatButton).setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
+        }
+        findViewById<ImageView>(R.id.backButton).setOnClickListener {
+            finish()
         }
     }
 }
