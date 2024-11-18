@@ -3,6 +3,7 @@ package com.example.codementor
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -25,17 +26,26 @@ class RegisterActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
 
         registerButton.setOnClickListener {
-            val email = emailField.text.toString()
-            val password = passwordField.text.toString()
-            val confirmPassword = confirmPasswordField.text.toString()
+            val email = emailField.text.toString().trim()
+            val password = passwordField.text.toString().trim()
+            val confirmPassword = confirmPasswordField.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Formato incorreto!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             if (password != confirmPassword) {
                 Toast.makeText(this, "As senhas não correspondem!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password.length < 8 || confirmPassword.length < 8) {
+                Toast.makeText(this, "A senha deve conter mais de 8 digitos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
