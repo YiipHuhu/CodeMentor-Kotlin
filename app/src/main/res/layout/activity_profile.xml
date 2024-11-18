@@ -25,8 +25,9 @@
         android:id="@+id/btnChangePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Alterar Foto"
-        android:layout_gravity="center" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/textView3"
@@ -54,5 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#0ACF83"
-        android:text="Salvar" />
+        android:text="Salvar"
+        android:textColor="#FFFFFF" />
 </LinearLayout>

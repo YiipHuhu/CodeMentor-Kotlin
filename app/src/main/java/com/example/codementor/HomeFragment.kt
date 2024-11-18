@@ -31,16 +31,13 @@ class HomeFragment : Fragment() {
         // Lista de módulos
         val moduloList = listOf(
             Modulos("Introdução a Kotlin", "Kotlin", "13m"),
-            Modulos("Definindo variaveis", "Kotlin", "10m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m"),
-            Modulos("Teste", "xml/Kotlin", "60m")
+            Modulos("Declaração de variáveis em Kotlin", "Kotlin", "10m"),
+            Modulos("O que é RecyclerView", "Kotlin", "20m"),
+            Modulos("Tudo sobre Kotlin", "Kotlin", "30m"),
+            Modulos("Elementos comuns de um layout XML", "XML/Kotlin", "15m"),
+            Modulos("Layout e posicionamento de componentes", "XML/Kotlin", "30m"),
+            Modulos("Estilos e temas", "Kotlin", "25m"),
+            Modulos("Estrutura de um projeto Android em Kotlin", "Kotlin", "40m")
         )
 
         // Configurar Adapter
