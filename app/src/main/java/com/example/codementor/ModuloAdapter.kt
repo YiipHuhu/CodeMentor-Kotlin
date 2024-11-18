@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ModuloAdapter(private val moduloList: List<Modulos>) : RecyclerView.Adapter<ModuloAdapter.ModuloViewHolder>() {
+class ModuloAdapter(
+    private val moduloList: List<Modulos>,
+    private val onItemClick: (Modulos) -> Unit // Callback para cliques
+) : RecyclerView.Adapter<ModuloAdapter.ModuloViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuloViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_modulos, parent, false)
@@ -19,8 +22,7 @@ class ModuloAdapter(private val moduloList: List<Modulos>) : RecyclerView.Adapte
         holder.bind(modulo)
 
         holder.itemView.setOnClickListener {
-            // lgica que direciona pra tela da atividade
-            Log.d("ModuloAdapter", "Clicou em: ${modulo.name}")
+            onItemClick(modulo)
         }
     }
 

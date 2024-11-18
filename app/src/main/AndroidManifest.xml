@@ -18,6 +18,9 @@
         <activity android:name=".ProfileActivity"
             android:theme="@style/Theme.Codementor.NoActionBar"/>
 
+        <activity android:name=".ExplanationActivity"
+            android:theme="@style/Theme.Codementor.NoActionBar"/>
+
         <activity android:name=".ChatActivity"
             android:theme="@style/Theme.Codementor.NoActionBar"/>
 

@@ -55,7 +55,7 @@
 
     <string name="char_example_code">
     <![CDATA[
-    val grade: Char = \'A'
+    val grade: Char = &apos;A&apos;
     println(grade)
     ]]>
 </string>

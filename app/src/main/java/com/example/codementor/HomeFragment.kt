@@ -1,5 +1,6 @@
 package com.example.codementor
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,18 +18,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate o layout do fragmento
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configurar RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Lista de módulos
         val moduloList = listOf(
             Modulos("Introdução a Kotlin", "Kotlin", "13m"),
             Modulos("Declaração de variáveis em Kotlin", "Kotlin", "10m"),
@@ -40,8 +38,16 @@ class HomeFragment : Fragment() {
             Modulos("Estrutura de um projeto Android em Kotlin", "Kotlin", "40m")
         )
 
-        // Configurar Adapter
-        moduloAdapter = ModuloAdapter(moduloList)
+        // Configurar Adapter com callback
+        moduloAdapter = ModuloAdapter(moduloList) { modulo ->
+            openModuloDetail(modulo) // Chama o método para abrir a atividade
+        }
         recyclerView.adapter = moduloAdapter
+    }
+
+    private fun openModuloDetail(modulo: Modulos) {
+        val intent = Intent(requireContext(), ExplanationActivity::class.java)
+        intent.putExtra("moduloName", modulo.name) // Passa dados para a Activity
+        startActivity(intent)
     }
 }
