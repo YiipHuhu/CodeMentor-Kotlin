@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <string name="kotlin_summary">
+        O Kotlin é uma linguagem de programação moderna e poderosa desenvolvida pela JetBrains.
+        Desde 2017, ela é oficialmente suportada pelo Android, sendo uma das principais opções
+        para o desenvolvimento de aplicativos móveis. Kotlin foi projetada para ser concisa,
+        segura e fácil de entender, com total interoperabilidade com o Java, o que significa que
+        você pode misturar os dois em um mesmo projeto sem problemas.
+
+        Kotlin é amplamente usada em diferentes contextos, como:
+        - Desenvolvimento de aplicativos Android.
+        - Desenvolvimento backend para servidores com frameworks como Ktor e Spring.
+        - Desenvolvimento multiplataforma com Kotlin Multiplatform, permitindo criar aplicativos
+          que compartilham lógica em Android, iOS, web e desktop.
+
+        A linguagem também inclui recursos que facilitam o trabalho do programador, como:
+        - Null safety: Evita erros comuns relacionados a valores nulos.
+        - Funções de extensão: Permitem adicionar funcionalidades a classes existentes.
+        - Coroutines: Facilitam o uso de operações assíncronas.
+        - Suporte completo à programação funcional e orientação a objetos.
+
+        Graças a essas características, o Kotlin está rapidamente se tornando uma das linguagens
+        mais populares entre desenvolvedores de software.
+    </string>
+
+        <string name="code_summary_title">O que são Arquivos de Código?</string>
+
+        <string name="code_summary">
+        Arquivos de código em Kotlin contêm as instruções que definem o comportamento do aplicativo.
+        Esses arquivos incluem funções, classes, e outras estruturas que controlam a lógica de negócios
+        e interações do usuário. Por exemplo, no Android, o arquivo `MainActivity.kt` geralmente contém
+        o código da tela principal do aplicativo.
+
+        Estruturas comuns em arquivos de código Kotlin:
+        - **Classes**: Usadas para definir objetos e encapsular comportamentos.
+        - **Funções**: Segmentos de código que executam ações específicas.
+        - **Propriedades**: Variáveis que representam o estado dos objetos.
+
+        Exemplo de código:
+    </string>
+
+        <string name="code_example">
+        <![CDATA[
+        class MainActivity : AppCompatActivity() {
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.activity_main)
+
+                val message = "Olá, Kotlin!"
+                println(message)
+            }
+        }
+        ]]>
+    </string>
+
+        <string name="xml_summary_title">O que são Arquivos XML?</string>
+
+        <string name="xml_summary">
+        XML (eXtensible Markup Language) é uma linguagem de marcação usada para descrever dados de forma estruturada.
+        No desenvolvimento Android, XML desempenha um papel essencial na definição de layouts, recursos e configurações.
+
+        **Usos comuns de XML no Android:**
+        - **Layouts:** Arquivos em `res/layout` são usados para definir a estrutura visual das telas.
+        - **Strings e cores:** Em `res/values`, arquivos XML armazenam textos e valores reutilizáveis.
+        - **Configurações do aplicativo:** Arquivos como `AndroidManifest.xml` definem informações essenciais do app.
+
+        Aqui está um exemplo de layout XML simples:
+    </string>
+
+        <string name="xml_example">
+        <![CDATA[
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Olá, Kotlin!"
+            android:textSize="20sp"
+            android:textColor="#000000" />
+        ]]>
+    </string>
+
+        <string name="footer_note">
+        Kotlin e XML trabalham juntos no desenvolvimento Android. O Kotlin controla a lógica e o comportamento do aplicativo,
+        enquanto o XML define a interface visual e recursos estáticos. Compreender como ambos se complementam é essencial
+        para criar aplicativos robustos e bem estruturados.
+    </string>
+
+</resources>

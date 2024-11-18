@@ -12,5 +12,8 @@
     <string name="sobre2">Aqui, você encontrará diversos módulos interativos com temas variados, projetados para aprimorar suas habilidades de programação. Além disso, o aplicativo conta com uma Inteligência Artificial integrada, pronta para esclarecer dúvidas e oferecer suporte personalizado ao seu aprendizado.</string>
     <string name="sobre3">Este projeto foi desenvolvido por João, Carlos e Alan como parte de um trabalho acadêmico, com o objetivo de unir tecnologia e educação de forma prática e acessível.</string>
     <string name="sobre4">Explore, aprenda e programe com o Codementor!</string>
+    <string name="back_button">Voltar</string>
+    <string name="logo_description">Logo do Aplicativo</string>
+    <string name="chat_button">Botão para abrir o chat de IA</string>
 </resources>
 

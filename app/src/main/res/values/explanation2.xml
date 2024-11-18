@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="numeric_variables_intro">
+    Em Kotlin, você pode declarar variáveis para diferentes tipos de números:
+</string>
+
+    <string name="int_example_description">
+    Aqui está um exemplo de uma variável do tipo inteiro (`Int`):
+</string>
+
+    <string name="int_example_code">
+    <![CDATA[
+    val age: Int = 25
+    println(age)
+    ]]>
+</string>
+
+    <string name="double_example_description">
+    Aqui está um exemplo de uma variável do tipo ponto flutuante (`Double`):
+</string>
+
+    <string name="double_example_code">
+    <![CDATA[
+    val price: Double = 19.99
+    println(price)
+    ]]>
+</string>
+
+    <string name="string_example_description">
+    Variáveis de texto são declaradas usando o tipo `String`:
+</string>
+
+    <string name="string_example_code">
+    <![CDATA[
+    val greeting: String = "Olá, Kotlin!"
+    println(greeting)
+    ]]>
+</string>
+
+    <string name="boolean_example_description">
+    Para armazenar valores verdadeiros ou falsos, use o tipo `Boolean`:
+</string>
+
+    <string name="boolean_example_code">
+    <![CDATA[
+    val isKotlinFun: Boolean = true
+    println(isKotlinFun)
+    ]]>
+</string>
+
+    <string name="char_example_description">
+    Para um único caractere, use o tipo `Char`:
+</string>
+
+    <string name="char_example_code">
+    <![CDATA[
+    val grade: Char = \'A'
+    println(grade)
+    ]]>
+</string>
+
+    <string name="variable_type_notes">
+    Nota: Kotlin infere o tipo automaticamente se você não especificar, mas é uma boa prática declarar explicitamente para maior clareza.
+</string>
+
+</resources>

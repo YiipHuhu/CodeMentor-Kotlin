@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recyclerview_intro">
+        O RecyclerView é um componente do Android que permite exibir uma lista de itens de maneira eficiente, reaproveitando as visualizações que já não estão visíveis na tela para melhorar o desempenho da aplicação.
+    </string>
+
+    <string name="recyclerview_structure">
+        Para usar um RecyclerView, você precisa de três componentes principais:
+        1. RecyclerView - o componente de exibição da lista.
+        2. Adapter - adapta e vincula os dados para exibição na lista.
+        3. ViewHolder - representa uma única visualização da lista.
+    </string>
+
+    <string name="recyclerview_xml">
+        <![CDATA[
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        ]]>
+    </string>
+
+    <string name="adapter_description">
+        Em seguida, crie um Adapter para fornecer as visualizações ao RecyclerView. Aqui está um exemplo básico de um Adapter no Kotlin:
+    </string>
+
+    <string name="adapter_code">
+        <![CDATA[
+        class MyAdapter(private val itemList: List<String>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+
+            class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+                val textView: TextView = itemView.findViewById(R.id.textView)
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+                return MyViewHolder(view)
+            }
+
+            override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+                holder.textView.text = itemList[position]
+            }
+
+            override fun getItemCount(): Int = itemList.size
+        }
+        ]]>
+    </string>
+
+    <string name="recyclerview_setup">
+        Finalmente, você configura o RecyclerView na Activity ou Fragment onde ele será exibido:
+    </string>
+
+    <string name="setup_code">
+        <![CDATA[
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = MyAdapter(listOf("Item 1", "Item 2", "Item 3"))
+        ]]>
+    </string>
+</resources>
