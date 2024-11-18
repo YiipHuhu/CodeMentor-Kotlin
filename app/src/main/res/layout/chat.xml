@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/inputLayout"
+        android:background="@drawable/gradient_background"
         android:padding="8dp" />
 
     <!-- Layout para entrada de texto -->
@@ -27,15 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Digite sua mensagem"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:textColor="#000000" />
 <!--            android:background="@drawable/rounded_edittext" -->
 
         <ImageButton
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_about"
-            android:background="@null"
-            android:contentDescription="Enviar" />
+            android:background="@color/black"
+            android:contentDescription="Enviar"
+            android:src="@drawable/ic_about" />
     </LinearLayout>
 </RelativeLayout>

@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }
+                R.id.nav_chat -> {
+                    //chat
+                    startActivity(Intent(this, ChatActivity::class.java))
+                }
                 R.id.nav_about -> {
                     //telinha de sobre
                     startActivity(Intent(this, AboutActivity::class.java))
