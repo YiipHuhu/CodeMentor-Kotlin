@@ -95,7 +95,7 @@ class ChatActivity : AppCompatActivity() {
     private fun sendMessageToApi() {
         val chatRequest = ChatRequest(
             context = mapOf("previous_response" to getLastResponse()), // passa a ultima resposta como contexto
-            messages = messageHistory, // Envia todo o histórico
+            messages = messageHistory, // Envia tudo o histórico
             temperature = 0.8,
             max_tokens = 1500
         )
