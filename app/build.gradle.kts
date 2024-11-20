@@ -55,6 +55,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
+    //markdown
     implementation("io.noties.markwon:core:4.6.2")
 
     //firebase
