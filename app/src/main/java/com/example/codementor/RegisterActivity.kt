@@ -1,6 +1,5 @@
 package com.example.codementor
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -8,10 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +22,8 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPasswordField = findViewById<EditText>(R.id.etConfirmPassword)
         val registerButton = findViewById<Button>(R.id.btnRegister)
 
-        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
+        // Inicialização FirebaseAuth
+        auth = FirebaseAuth.getInstance()
 
         registerButton.setOnClickListener {
             val email = emailField.text.toString().trim()
@@ -35,46 +35,31 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Formato incorreto!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Formato de email incorreto!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             if (password != confirmPassword) {
                 Toast.makeText(this, "As senhas não correspondem!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            if (password.length < 8 || confirmPassword.length < 8) {
-                Toast.makeText(this, "A senha deve conter mais de 8 digitos", Toast.LENGTH_SHORT).show()
+            if (password.length < 8) {
+                Toast.makeText(this, "A senha deve conter pelo menos 8 dígitos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Recuperar a lista de usuários existentes
-            val usersJson = sharedPreferences.getString("users", null)
-            val usersMap: MutableMap<String, String> = if (usersJson != null) {
-                Gson().fromJson(usersJson, object : TypeToken<MutableMap<String, String>>() {}.type)
-            } else {
-                mutableMapOf()
-            }
-
-            // Verificar se o email já está registrado
-            if (usersMap.containsKey(email)) {
-                Toast.makeText(this, "Email já registrado!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // Adicionar o novo usuário ao mapa
-            usersMap[email] = password
-
-            // Salvar o mapa atualizado no SharedPreferences
-            val updatedUsersJson = Gson().toJson(usersMap)
-            editor.putString("users", updatedUsersJson).apply()
-
-            Toast.makeText(this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show()
-
-            // Redirecionar para a tela de login
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            // Registrar o usuário no Firebase
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    } else {
+                        // Falha no registro
+                        Toast.makeText(this, "Erro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 }
+

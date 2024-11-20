@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.codementor.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -64,8 +65,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_logout -> {
                     // Realizar logout
-                    val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
-                    sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
+                    FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }

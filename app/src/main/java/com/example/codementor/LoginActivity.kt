@@ -9,19 +9,25 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // usaando o sharedpreferences pra ajustar se deve ou nao manter o login
         val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        val keepConnected = sharedPreferences.getBoolean("keepConnected", false)
 
-        if (isLoggedIn) {
+        // Inicialização do FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+
+        // Verificar se o usuário já está logado e se escolheu "manter conectado"
+        val currentUser = auth.currentUser
+        if (keepConnected && currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
             return
@@ -35,29 +41,36 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.btnLogin)
         val registerTextView = findViewById<TextView>(R.id.tvRegister)
 
+        // inicia estado do Switch
+        keepConnectedSwitch.isChecked = keepConnected
+
         loginButton.setOnClickListener {
-            val email = emailField.text.toString()
-            val password = passwordField.text.toString()
+            val email = emailField.text.toString().trim()
+            val password = passwordField.text.toString().trim()
 
-            val usersJson = sharedPreferences.getString("users", null)
-            val usersMap: Map<String, String> = if (usersJson != null) {
-                Gson().fromJson(usersJson, object : TypeToken<Map<String, String>>() {}.type)
-            } else {
-                mapOf()
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            if (usersMap[email] == password) {
-                Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
+            // Autenticar o usuário no Firebase
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
 
-                if (keepConnectedSwitch.isChecked) {
-                    sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+                        // Salvar a preferência de "manter conectado"
+                        sharedPreferences.edit()
+                            .putBoolean("keepConnected", keepConnectedSwitch.isChecked).apply()
+
+                        // Redirecionar para a tela principal
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        // Exibir mensagem de erro
+                        Toast.makeText(this, "Erro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this, "Credenciais inválidas!", Toast.LENGTH_SHORT).show()
-            }
         }
 
         registerTextView.setOnClickListener {
