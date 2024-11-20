@@ -1,9 +1,11 @@
-package com.example.codementor
+package com.example.codementor.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.codementor.R
+import com.example.codementor.chat.ChatActivity
 
 class ExplanationActivity : AppCompatActivity() {
 

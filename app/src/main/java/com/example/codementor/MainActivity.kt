@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils.replace
-import android.util.Log
-import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +14,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.codementor.chat.ChatActivity
 import com.example.codementor.databinding.ActivityMainBinding
+import com.example.codementor.user.LoginActivity
+import com.example.codementor.user.ProfileActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import java.io.File

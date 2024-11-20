@@ -1,10 +1,11 @@
-package com.example.codementor
+package com.example.codementor.chat
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.codementor.R
 import io.noties.markwon.Markwon
 
 data class ChatMessage(val message: String, val isUser: Boolean)

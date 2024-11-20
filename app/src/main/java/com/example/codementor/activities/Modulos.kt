@@ -1,4 +1,4 @@
-package com.example.codementor
+package com.example.codementor.activities
 
 data class Modulos (
     val name: String,
