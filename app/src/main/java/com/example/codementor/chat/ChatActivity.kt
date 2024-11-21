@@ -3,6 +3,7 @@ package com.example.codementor.chat
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,7 +69,9 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chat)
-
+        findViewById<ImageView>(R.id.backButton).setOnClickListener {
+            finish()
+        }
         recyclerView = findViewById(R.id.recyclerViewChat)
         editText = findViewById(R.id.editTextMessage)
         buttonSend = findViewById(R.id.buttonSend)

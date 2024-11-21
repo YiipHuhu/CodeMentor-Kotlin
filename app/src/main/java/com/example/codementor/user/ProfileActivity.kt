@@ -33,6 +33,10 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        findViewById<ImageView>(R.id.backButton).setOnClickListener {
+            finish()
+        }
+
         profileImageView = findViewById(R.id.profileImageView)
         val changePhotoButton = findViewById<Button>(R.id.btnChangePhoto)
         val saveButton = findViewById<Button>(R.id.btnSaveProfile)

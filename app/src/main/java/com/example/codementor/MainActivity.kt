@@ -2,6 +2,7 @@ package com.example.codementor
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
@@ -20,6 +21,7 @@ import com.example.codementor.user.LoginActivity
 import com.example.codementor.user.ProfileActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -95,21 +97,43 @@ class MainActivity : AppCompatActivity() {
         val headerNickname = headerView.findViewById<TextView>(R.id.nav_header_title)
         val headerImage = headerView.findViewById<ImageView>(R.id.imageView)
 
-        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
-        headerNickname.text = sharedPreferences.getString("nickname", "Bem-vindo!")
-        val photoUri = sharedPreferences.getString("photoUri", null)
+        val sharedPreferences = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val firestore = FirebaseFirestore.getInstance()
 
-        if (!photoUri.isNullOrEmpty()) {
-            val uri = Uri.parse(photoUri)
-            val file = File(uri.path ?: "")
+        if (userId != null) {
+            // pega o nickname do user no Firestore
+            firestore.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val nickname = document.getString("nickname") ?: "Bem-vindo!"
+                        headerNickname.text = nickname
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // caso de errado, usa o padrão "Bem-vindo!"
+                    headerNickname.text = "Bem-vindo!"
+                }
+        } else {
+            // Se o usuário não definido o nome
+            headerNickname.text = "Bem-vindo ao CodeMentor"
+        }
 
+        // Obter caminho da imagem salva no SharedPreferences
+        val imagePath = sharedPreferences.getString("profileImagePath", null)
+
+        if (!imagePath.isNullOrEmpty()) {
+            val file = File(imagePath)
+
+            // Verifica se o arquivo da imagem existe antes de carregá-lo
             if (file.exists()) {
-                headerImage.setImageURI(uri)
+                val bitmap = BitmapFactory.decodeFile(imagePath)
+                headerImage.setImageBitmap(bitmap)
             } else {
-                headerImage.setImageResource(R.drawable.ic_default_profile)
+                headerImage.setImageResource(R.drawable.ic_default_profile) // Imagem padrão
             }
         } else {
-            headerImage.setImageResource(R.drawable.ic_default_profile)
+            headerImage.setImageResource(R.drawable.ic_default_profile) // Imagem padrão
         }
     }
 
