@@ -1,6 +1,10 @@
 package com.example.codementor.user
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -10,9 +14,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.codementor.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -21,18 +26,19 @@ class ProfileActivity : AppCompatActivity() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
-    private val storage = FirebaseStorage.getInstance()
 
-    private var imageUri: Uri? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        profileImageView = findViewById(R.id.profileImageView) // ID do ImageView na tela de edição
-        val changePhotoButton = findViewById<Button>(R.id.btnChangePhoto) // Botão para alterar foto
-        val saveButton = findViewById<Button>(R.id.btnSaveProfile) // Botão para salvar alterações
+        profileImageView = findViewById(R.id.profileImageView)
+        val changePhotoButton = findViewById<Button>(R.id.btnChangePhoto)
+        val saveButton = findViewById<Button>(R.id.btnSaveProfile)
         val nicknameField = findViewById<EditText>(R.id.nicknameEditText)
+
+        sharedPreferences = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
 
         val userId = firebaseAuth.currentUser?.uid
 
@@ -42,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
             return
         }
 
-        // Carregar dados do Firestore
+        // Carregar dados do perfil
         loadUserProfile(userId, nicknameField)
 
         // Abrir galeria para selecionar imagem
@@ -60,7 +66,7 @@ class ProfileActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Salvar dados no Firestore e Storage
+            // Salvar apelido no Firestore
             saveUserProfile(userId, nickname)
         }
     }
@@ -68,59 +74,66 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            imageUri = data.data
-            profileImageView.setImageURI(imageUri)
+            val imageUri = data.data
+            if (imageUri != null) {
+                // Salvar imagem no armazenamento interno
+                val savedPath = saveImageToInternalStorage(imageUri)
+                if (savedPath != null) {
+                    sharedPreferences.edit()
+                        .putString("profileImagePath", savedPath)
+                        .apply()
+                    profileImageView.setImageBitmap(BitmapFactory.decodeFile(savedPath))
+                } else {
+                    Toast.makeText(this, "Erro ao salvar a imagem", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
     private fun loadUserProfile(userId: String, nicknameField: EditText) {
+        // Carregar apelido do Firestore
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val nickname = document.getString("nickname")
-                    val photoUrl = document.getString("photoUrl")
-
                     nicknameField.setText(nickname)
-
-                    if (!photoUrl.isNullOrEmpty()) {
-                        // Carregar a foto usando Picasso ou outra biblioteca
-                        Picasso.get().load(photoUrl).into(profileImageView)
-                    }
                 }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Erro ao carregar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-    }
 
-    private fun saveUserProfile(userId: String, nickname: String) {
-        // Salvar foto no Firebase Storage (se for selecionada)
-        if (imageUri != null) {
-            val imageRef = storage.reference.child("profile_images/$userId.jpg")
-            imageRef.putFile(imageUri!!)
-                .addOnSuccessListener {
-                    // Obter URL da imagem salva
-                    imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        val photoUrl = uri.toString()
-                        saveToFirestore(userId, nickname, photoUrl)
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Erro ao salvar imagem: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            // Salvar apenas o apelido no Firestore
-            saveToFirestore(userId, nickname, null)
+        // Carregar imagem do armazenamento interno
+        val imagePath = sharedPreferences.getString("profileImagePath", null)
+        if (imagePath != null) {
+            val bitmap = BitmapFactory.decodeFile(imagePath)
+            profileImageView.setImageBitmap(bitmap)
         }
     }
 
-    private fun saveToFirestore(userId: String, nickname: String, photoUrl: String?) {
-        val userProfile = hashMapOf(
-            "nickname" to nickname,
-            "photoUrl" to photoUrl
-        )
+    private fun saveImageToInternalStorage(imageUri: Uri): String? {
+        return try {
+            val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
 
-        firestore.collection("users").document(userId).set(userProfile)
+            // Criar um arquivo para salvar a imagem
+            val file = File(filesDir, "profile_image.jpg")
+            val outputStream = FileOutputStream(file)
+
+            // Salvar o bitmap no arquivo
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            file.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun saveUserProfile(userId: String, nickname: String) {
+        firestore.collection("users").document(userId).set(mapOf("nickname" to nickname))
             .addOnSuccessListener {
                 Toast.makeText(this, "Perfil salvo com sucesso!", Toast.LENGTH_SHORT).show()
                 finish()
