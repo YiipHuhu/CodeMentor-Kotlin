@@ -1,36 +1,30 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_withvector"
     android:orientation="vertical"
-    android:background="@drawable/gradient_background"
     android:padding="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/back_button"
+        android:focusable="true"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
-            android:clickable="true"
-            android:contentDescription="@string/back_button"
-            android:focusable="true"
-            android:src="@drawable/arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="212dp"
-            android:layout_height="191dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/logo_code" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/logo_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,21 +59,20 @@
         <EditText
             android:id="@+id/nicknameEditText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#D8D8DD"
+            android:background="@drawable/input_text_style"
             android:fontFamily="@font/sora"
             android:hint="Apelido"
-            android:inputType="textEmailAddress"
-            android:paddingStart="10dp"
-            android:textColor="#000000"
-            android:textColorHint="#979696" />
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#A09F99" />
 
         <Button
             android:id="@+id/btnSaveProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#0ACF83"
+            android:backgroundTint="#6C5BFF"
             android:text="Salvar"
             android:textColor="#FFFFFF" />
     </LinearLayout>

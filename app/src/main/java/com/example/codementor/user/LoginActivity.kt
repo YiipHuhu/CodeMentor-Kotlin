@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordField = findViewById<EditText>(R.id.etPasswordLogin)
         val keepConnectedSwitch = findViewById<SwitchCompat>(R.id.switchKeepConnected)
         val loginButton = findViewById<Button>(R.id.btnLogin)
-        val registerTextView = findViewById<TextView>(R.id.tvRegister)
+        val registerTextView = findViewById<TextView>(R.id.LoginTextView)
 
         // Inicia estado do Switch
         keepConnectedSwitch.isChecked = keepConnected

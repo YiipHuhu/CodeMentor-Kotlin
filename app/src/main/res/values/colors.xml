@@ -12,5 +12,6 @@
     <color name="switch_track_color_active">#FFFFFF</color>
     <color name="colorButtonText">#3E1C00</color>
     <color name="colorInterface">#E0E0E0 </color>
+    <color name="input_color">#2E2C32 </color>
     <color name="code_text">#FF000000</color>
 </resources>

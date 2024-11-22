@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/gradient_background_withvector"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -36,14 +36,14 @@
         <EditText
             android:id="@+id/etEmailLogin"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#D8D8DD"
+            android:background="@drawable/input_text_style"
             android:fontFamily="@font/sora"
             android:hint="E-mail"
             android:inputType="textEmailAddress"
             android:paddingStart="10dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textColorHint="#979696" />
 
         <TextView
@@ -59,14 +59,14 @@
         <EditText
             android:id="@+id/etPasswordLogin"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#D8D8DD"
+            android:background="@drawable/input_text_style"
             android:fontFamily="@font/sora"
             android:hint="Senha"
             android:inputType="textPassword"
             android:paddingStart="10dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textColorHint="#979696" />
 
         <LinearLayout
@@ -81,14 +81,15 @@
                 android:checked="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#FFFFFF"
-                android:trackTintMode="add"
                 android:thumbTint="@color/switch_thumb_color"
-                android:trackTint="@color/switch_track_color" />
+                android:trackTint="@color/switch_track_color"
+                android:trackTintMode="add" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/sora"
                 android:text="Manter conectado"
@@ -102,11 +103,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="#0ACF83"
+            android:backgroundTint="#6C5BFF"
             android:fontFamily="@font/sora"
             android:text="Entrar"
-            android:textColor="#FFFFFF"
-            android:textColorLink="#0ACF83" />
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -124,15 +124,15 @@
                 android:textColor="#FFFFFF" />
 
             <TextView
-                android:id="@+id/tvRegister"
+                android:id="@+id/LoginTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/sora"
                 android:gravity="center"
-                android:paddingTop="16dp"
+                android:paddingTop="18dp"
                 android:text="Cadastre-se"
-                android:textColor="#0ACF83"
+                android:textColor="#9CA2FF"
                 android:textStyle="bold" />
 
         </LinearLayout>
