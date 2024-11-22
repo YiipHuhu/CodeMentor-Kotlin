@@ -28,6 +28,7 @@ class ProfileActivity : AppCompatActivity() {
     private val firestore = FirebaseFirestore.getInstance()
 
     private lateinit var sharedPreferences: SharedPreferences
+    private var selectedImageUri: Uri? = null // Armazenar a imagem temporariamente
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,18 +79,10 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            val imageUri = data.data
-            if (imageUri != null) {
-                // Salvar imagem no armazenamento interno
-                val savedPath = saveImageToInternalStorage(imageUri)
-                if (savedPath != null) {
-                    sharedPreferences.edit()
-                        .putString("profileImagePath", savedPath)
-                        .apply()
-                    profileImageView.setImageBitmap(BitmapFactory.decodeFile(savedPath))
-                } else {
-                    Toast.makeText(this, "Erro ao salvar a imagem", Toast.LENGTH_SHORT).show()
-                }
+            selectedImageUri = data.data
+            if (selectedImageUri != null) {
+                // Exibir a imagem selecionada na tela
+                profileImageView.setImageURI(selectedImageUri)
             }
         }
     }
@@ -115,6 +108,28 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveUserProfile(userId: String, nickname: String) {
+        // Salvar o apelido no Firestore
+        firestore.collection("users").document(userId).set(mapOf("nickname" to nickname))
+            .addOnSuccessListener {
+                // Salvar a imagem localmente, se houver uma imagem selecionada
+                if (selectedImageUri != null) {
+                    val savedPath = saveImageToInternalStorage(selectedImageUri!!)
+                    if (savedPath != null) {
+                        sharedPreferences.edit()
+                            .putString("profileImagePath", savedPath)
+                            .apply()
+                    }
+                }
+
+                Toast.makeText(this, "Perfil salvo com sucesso!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao salvar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     private fun saveImageToInternalStorage(imageUri: Uri): String? {
         return try {
             val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
@@ -134,16 +149,5 @@ class ProfileActivity : AppCompatActivity() {
             e.printStackTrace()
             null
         }
-    }
-
-    private fun saveUserProfile(userId: String, nickname: String) {
-        firestore.collection("users").document(userId).set(mapOf("nickname" to nickname))
-            .addOnSuccessListener {
-                Toast.makeText(this, "Perfil salvo com sucesso!", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Erro ao salvar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 }

@@ -16,7 +16,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginEnd="50dp"
             android:clickable="true"
             android:contentDescription="@string/back_button"
             android:focusable="true"
@@ -32,48 +32,56 @@
             app:srcCompat="@drawable/logo_code" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_default_profile" />
-
-    <Button
-        android:id="@+id/btnChangePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Alterar Foto"
-        android:textColor="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/sora"
-        android:text="Apelido"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/nicknameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:background="#D8D8DD"
-        android:fontFamily="@font/sora"
-        android:hint="  Apelido"
-        android:inputType="textEmailAddress"
-        android:textColor="#000000"
-        android:textColorHint="#979696" />
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_default_profile" />
 
-    <Button
-        android:id="@+id/btnSaveProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#0ACF83"
-        android:text="Salvar"
-        android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/btnChangePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Alterar Foto"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/sora"
+            android:text="Apelido"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/nicknameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="#D8D8DD"
+            android:fontFamily="@font/sora"
+            android:hint="Apelido"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#979696" />
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#0ACF83"
+            android:text="Salvar"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
 </LinearLayout>

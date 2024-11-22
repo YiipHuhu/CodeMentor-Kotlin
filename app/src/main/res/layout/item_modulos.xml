@@ -8,7 +8,7 @@
     app:cardElevation="8dp"
     app:cardBackgroundColor="@android:color/transparent">
 
-    <!-- Layout principal do card do filme -->
+    <!-- Layout principal do card do modulo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,14 +16,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Layout para Título, Gênero e Ano do Filme -->
+        <!-- Layout para Título, Gênero e tempo-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Título do Filme -->
+            <!-- Título do modulo -->
             <TextView
                 android:id="@+id/textViewTitle"
                 android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@color/white" />
 
-            <!-- Gênero e Ano do Filme -->
+            <!-- Gênero e tempo -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
