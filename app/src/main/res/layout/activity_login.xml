@@ -74,13 +74,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchKeepConnected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                style="@style/CustomSwitch"
-                android:textColor="#FFFFFF" />
+                android:checked="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFFFFF"
+                android:trackTintMode="add"
+                android:thumbTint="@color/switch_thumb_color"
+                android:trackTint="@color/switch_track_color" />
 
             <TextView
                 android:id="@+id/textView2"

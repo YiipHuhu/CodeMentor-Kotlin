@@ -7,8 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="switch_thumb_color">#7C3F00</color>
+    <color name="switch_thumb_color">#5936F5</color>
     <color name="switch_track_color">#DDDDDD</color>
+    <color name="switch_track_color_active">#FFFFFF</color>
     <color name="colorButtonText">#3E1C00</color>
     <color name="colorInterface">#E0E0E0 </color>
     <color name="code_text">#FF000000</color>

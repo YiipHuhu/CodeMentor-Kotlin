@@ -9,9 +9,11 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.codementor.MainActivity
 import com.example.codementor.R
 import com.google.firebase.auth.FirebaseAuth
+import androidx.appcompat.widget.SwitchCompat
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,14 +22,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // usaando o sharedpreferences pra ajustar se deve ou nao manter o login
         val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         val keepConnected = sharedPreferences.getBoolean("keepConnected", false)
 
-        // Inicialização do FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
-        // Verificar se o usuário já está logado e se escolheu "manter conectado"
         val currentUser = auth.currentUser
         if (keepConnected && currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
@@ -39,12 +38,18 @@ class LoginActivity : AppCompatActivity() {
 
         val emailField = findViewById<EditText>(R.id.etEmailLogin)
         val passwordField = findViewById<EditText>(R.id.etPasswordLogin)
-        val keepConnectedSwitch = findViewById<Switch>(R.id.switchKeepConnected)
+        val keepConnectedSwitch = findViewById<SwitchCompat>(R.id.switchKeepConnected)
         val loginButton = findViewById<Button>(R.id.btnLogin)
         val registerTextView = findViewById<TextView>(R.id.tvRegister)
 
-        // inicia estado do Switch
+        // Inicia estado do Switch
         keepConnectedSwitch.isChecked = keepConnected
+        updateSwitchTrackColor(keepConnectedSwitch)
+
+        // Adiciona listener para alterar cor do Switch dinamicamente
+        keepConnectedSwitch.setOnCheckedChangeListener { _, isChecked ->
+            updateSwitchTrackColor(keepConnectedSwitch)
+        }
 
         loginButton.setOnClickListener {
             val email = emailField.text.toString().trim()
@@ -55,21 +60,16 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Autenticar o usuário no Firebase
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
-
-                        // Salvar a preferência de "manter conectado"
                         sharedPreferences.edit()
                             .putBoolean("keepConnected", keepConnectedSwitch.isChecked).apply()
 
-                        // Redirecionar para a tela principal
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
-                        // Exibir mensagem de erro
                         Toast.makeText(this, "Erro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -78,5 +78,14 @@ class LoginActivity : AppCompatActivity() {
         registerTextView.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+    }
+
+    private fun updateSwitchTrackColor(switch: SwitchCompat) {
+        val colorResId = if (switch.isChecked) {
+            R.color.switch_track_color_active // Branco para ativado
+        } else {
+            R.color.switch_track_color // Cinza para desativado
+        }
+        switch.trackTintList = ContextCompat.getColorStateList(this, colorResId)
     }
 }
