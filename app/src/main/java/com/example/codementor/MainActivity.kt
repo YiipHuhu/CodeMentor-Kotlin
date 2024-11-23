@@ -32,18 +32,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.fragment_home)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                replace(R.id.nav_host_fragment_content_main, HomeFragment())
-            }
-        }
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMain.toolbar)
+        setSupportActionBar(binding.appBarMain.toolbar) // Configura o Toolbar
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -62,25 +54,20 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
-                    // Abrir a tela de perfil
                     startActivity(Intent(this, ProfileActivity::class.java))
                 }
                 R.id.nav_logout -> {
-                    // Realizar logout
                     FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }
                 R.id.nav_chat -> {
-                    //chat
                     startActivity(Intent(this, ChatActivity::class.java))
                 }
                 R.id.nav_about -> {
-                    //telinha de sobre
                     startActivity(Intent(this, AboutActivity::class.java))
                 }
                 else -> {
-                    // Caso contrário, deixar a navegação padrão lidar com o item
                     navController.navigate(menuItem.itemId)
                 }
             }
@@ -88,8 +75,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Atualizar cabeçalho na inicialização
-        updateHeader(navView)
+        updateHeader(navView) // Atualizar cabeçalho na inicialização
     }
 
     private fun updateHeader(navView: NavigationView) {
@@ -102,7 +88,6 @@ class MainActivity : AppCompatActivity() {
         val firestore = FirebaseFirestore.getInstance()
 
         if (userId != null) {
-            // pega o nickname do user no Firestore
             firestore.collection("users").document(userId).get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
@@ -110,36 +95,27 @@ class MainActivity : AppCompatActivity() {
                         headerNickname.text = nickname
                     }
                 }
-                .addOnFailureListener { e ->
-                    // caso de errado, usa o padrão "Bem-vindo!"
+                .addOnFailureListener { _ ->
                     headerNickname.text = "Bem-vindo!"
                 }
         } else {
-            // Se o usuário não definido o nome
             headerNickname.text = "Bem-vindo ao CodeMentor"
         }
 
-        // Obter caminho da imagem salva no SharedPreferences
         val imagePath = sharedPreferences.getString("profileImagePath", null)
 
         if (!imagePath.isNullOrEmpty()) {
             val file = File(imagePath)
 
-            // Verifica se o arquivo da imagem existe antes de carregá-lo
             if (file.exists()) {
                 val bitmap = BitmapFactory.decodeFile(imagePath)
                 headerImage.setImageBitmap(bitmap)
             } else {
-                headerImage.setImageResource(R.drawable.ic_default_profile) // Imagem padrão
+                headerImage.setImageResource(R.drawable.ic_default_profile)
             }
         } else {
-            headerImage.setImageResource(R.drawable.ic_default_profile) // Imagem padrão
+            headerImage.setImageResource(R.drawable.ic_default_profile)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateHeader(binding.navView)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -147,3 +123,5 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
+
+

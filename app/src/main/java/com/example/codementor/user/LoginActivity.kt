@@ -3,9 +3,9 @@ package com.example.codementor.user
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -72,6 +72,10 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "Erro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(this, "Formato de email incorreto!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
         }
 
