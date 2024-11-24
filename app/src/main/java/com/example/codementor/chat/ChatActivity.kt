@@ -1,6 +1,7 @@
 package com.example.codementor.chat
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -47,6 +48,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var adapter: ChatAdapter
     private lateinit var editText: EditText
     private lateinit var buttonSend: ImageButton
+
     private val messageHistory = mutableListOf<Message>() // Lista para armazenar o histórico de mensagens
 
     private val api: ChatApi by lazy {
@@ -75,6 +77,22 @@ class ChatActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewChat)
         editText = findViewById(R.id.editTextMessage)
         buttonSend = findViewById(R.id.buttonSend)
+        val buttonResuma = findViewById<Button>(R.id.buttonResuma)
+        val buttonExercicios = findViewById<Button>(R.id.buttonExercicios)
+        val buttoncodigo = findViewById<Button>(R.id.buttoncodigo)
+
+        buttonResuma.setOnClickListener {
+            sendPredefinedMessage("Preciso que você crie um resumo para mim, por favor.")
+        }
+
+        buttonExercicios.setOnClickListener {
+            sendPredefinedMessage("Quais exercícios você sugere?")
+        }
+
+        buttoncodigo.setOnClickListener {
+            sendPredefinedMessage("Preciso de ajuda com um código, você pode me ajudar?")
+        }
+
 
         adapter = ChatAdapter(mutableListOf())
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -85,16 +103,17 @@ class ChatActivity : AppCompatActivity() {
             if (userMessage.isNotEmpty()) {
                 val userMessageObject = Message(role = "user", id = generateMessageId(), content = userMessage)
                 messageHistory.add(userMessageObject) // Adiciona ao histórico
-                adapter.addMessage(ChatMessage(userMessage, true))
+                adapter.addMessage(ChatMessage(userMessage, true)) // Adiciona ao adaptador
                 recyclerView.scrollToPosition(adapter.itemCount - 1)
                 editText.text.clear()
-                sendMessageToApi()
+                sendMessageToApi(userMessage) // Envia para a API
             }
         }
     }
 
-    private fun sendMessageToApi() {
-        // Mensagem temporária pro feedback visual
+
+    private fun sendMessageToApi(prompt: String) {
+        // Adiciona feedback visual (mensagem de "digitando...")
         val typingMessage = ChatMessage("...", isUser = false)
         adapter.addMessage(typingMessage)
         recyclerView.scrollToPosition(adapter.itemCount - 1)
@@ -109,7 +128,7 @@ class ChatActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val response = api.sendMessage(chatRequest)
-                // Remover aqueles ... da mensagem de feedback visual
+                // Remove a mensagem de feedback visual
                 adapter.removeMessage(typingMessage)
 
                 if (response.choices.isNotEmpty()) {
@@ -120,7 +139,7 @@ class ChatActivity : AppCompatActivity() {
                     val aiMessageObject = Message(role = "assistant", id = generateMessageId(), content = aiMessage)
                     messageHistory.add(aiMessageObject)
 
-                    // Adiciona a mensagem ao adapter
+                    // Adiciona a mensagem da IA ao adaptador
                     adapter.addMessage(ChatMessage(aiMessage, false))
                     recyclerView.scrollToPosition(adapter.itemCount - 1)
                 } else {
@@ -134,6 +153,13 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    private fun sendPredefinedMessage(message: String) {
+        val userMessageObject = Message(role = "user", id = generateMessageId(), content = message)
+        messageHistory.add(userMessageObject)
+        adapter.addMessage(ChatMessage(message, true))
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
+        sendMessageToApi(message)
+    }
 
     private fun getLastResponse(): String {
         // Retorna o conteúdo da última mensagem da IA, ou uma string vazia se não houver
