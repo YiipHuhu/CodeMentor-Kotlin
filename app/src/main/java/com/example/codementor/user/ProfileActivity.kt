@@ -123,6 +123,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Perfil salvo com sucesso!", Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK)
                 finish()
             }
             .addOnFailureListener { e ->

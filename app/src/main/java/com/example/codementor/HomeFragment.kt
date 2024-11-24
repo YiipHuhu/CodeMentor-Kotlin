@@ -74,7 +74,6 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Não fazemos nada aqui, já que a pesquisa é realizada enquanto o texto é alterado
                 return false
             }
 
