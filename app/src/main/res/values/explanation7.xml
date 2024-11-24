@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="styles_themes_summary">
+        Estilos e temas no Android são ferramentas poderosas para criar interfaces de usuário consistentes e personalizadas.
+        Eles ajudam a definir a aparência de elementos visuais e o comportamento de toda a aplicação.
+    </string>
+
+    <string name="styles_title">O que são Estilos?</string>
+    <string name="styles_definition">
+        Estilos são coleções de atributos de aparência que podem ser aplicados a Views ou Widgets individuais.
+        Eles permitem reutilizar configurações visuais, como cores, tamanhos de texto e espaçamentos.
+        Por exemplo:
+        - Um estilo pode definir que todos os botões tenham bordas arredondadas e cor de fundo azul.
+        - Os estilos são definidos em arquivos XML no diretório "res/values".
+    </string>
+
+    <string name="themes_title">O que são Temas?</string>
+    <string name="themes_definition">
+        Temas são um conjunto de atributos que definem a aparência global de uma aplicação ou atividade.
+        Eles controlam aspectos como a cor da barra de status, o estilo do cabeçalho e muito mais.
+        Por exemplo:
+        - Um tema pode definir que toda a aplicação use um esquema de cores escuras (Dark Mode).
+        - Os temas são aplicados no arquivo "AndroidManifest.xml" ou diretamente em Activities específicas.
+    </string>
+
+    <string name="styles_tips_title">Dicas para Trabalhar com Estilos e Temas</string>
+    <string name="styles_tips">
+        - Use estilos para personalizar componentes individuais de forma consistente.
+        - Crie temas para unificar a aparência global do aplicativo.
+        - Utilize temas dinâmicos para alternar entre modo claro e escuro.
+        - Evite duplicação de código visual, aproveitando herança entre estilos e temas.
+    </string>
+
+    <string name="footer_note7">
+        Estilos e temas são essenciais para criar uma identidade visual forte no aplicativo.
+        Eles tornam o design mais consistente e ajudam a economizar tempo no desenvolvimento.
+    </string>
+</resources>

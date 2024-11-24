@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient_background_withvector">
 
     <ImageView
         android:id="@+id/backButton"
@@ -35,15 +35,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/sora"
         android:gravity="center"
-        android:lineSpacingExtra="12sp"
-        android:text="O que é RecyclerView?"
-        android:textAlignment="center"
+        android:text="Elementos comum de Layout"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo" />
@@ -54,6 +53,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,9 +70,19 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
-                android:text="@string/recyclerview_intro"
-                android:textColor="#FFFFFF"
+                android:text="@string/layout_summary"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/sora"
+                android:text="@string/layout_elements_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,21 +90,29 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
-                android:text="@string/recyclerview_structure"
-                android:textColor="#FFFFFF"
+                android:text="@string/layout_elements"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
-            <!-- Trecho de código XML do RecyclerView -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/sora"
+                android:text="@string/layout_tips_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
-                android:padding="8dp"
-                android:text="@string/recyclerview_xml"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
+                android:lineSpacingExtra="4sp"
+                android:text="@string/layout_tips"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -102,41 +120,9 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
-                android:text="@string/adapter_description"
-                android:textColor="#FFFFFF"
+                android:text="@string/footer_note5"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_text_style"
-                android:fontFamily="@font/sora"
-                android:padding="8dp"
-                android:text="@string/adapter_code"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/sora"
-                android:lineSpacingExtra="4sp"
-                android:text="@string/recyclerview_setup"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_text_style"
-                android:fontFamily="@font/sora"
-                android:padding="8dp"
-                android:text="@string/setup_code"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -151,5 +137,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="30dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

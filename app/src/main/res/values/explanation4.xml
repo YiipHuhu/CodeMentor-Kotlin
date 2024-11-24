@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lifecycle_summary">
+        Ciclos de vida representam as fases pelas quais uma atividade ou fragmento passa durante a execução de um aplicativo Android.
+        Compreender esses ciclos é essencial para gerenciar recursos de maneira eficiente e evitar problemas como vazamentos de memória.
+    </string>
+
+    <string name="lifecycle_phases_title">Fases do Ciclo de Vida</string>
+    <string name="lifecycle_phases">
+
+onCreate: Inicialização da atividade. Configure componentes essenciais e carregue dados iniciais.
+onStart: A atividade está visível, mas ainda não interativa.
+onResume: A atividade está visível e pronta para interagir com o usuário.
+onPause: A atividade perdeu o foco; usada para liberar recursos que não são mais necessários.
+onStop: A atividade não está mais visível; ideal para liberar recursos pesados.
+onDestroy: Última chamada antes que a atividade seja destruída.
+</string>
+
+    <string name="lifecycle_tips_title">Dicas Importantes</string>
+    <string name="lifecycle_tips">
+
+Use onStart e onStop para gerenciar ações que dependem da visibilidade, como reprodução de mídia.
+Evite operações pesadas no onResume para garantir uma experiência suave.
+Sempre libere recursos em onPause e onStop para evitar vazamentos de memória.
+</string>
+
+    <string name="footer_note4">
+        Conhecer os ciclos de vida do Android é essencial para criar aplicativos robustos e com boa performance.
+    </string>
+</resources>

@@ -6,9 +6,9 @@
 
     <string name="recyclerview_structure">
         Para usar um RecyclerView, você precisa de três componentes principais:
-        1. RecyclerView - o componente de exibição da lista.
-        2. Adapter - adapta e vincula os dados para exibição na lista.
-        3. ViewHolder - representa uma única visualização da lista.
+        - RecyclerView: o componente de exibição da lista.
+        - Adapter: adapta e vincula os dados para exibição na lista.
+        - ViewHolder: representa uma única visualização da lista.
     </string>
 
     <string name="recyclerview_xml">

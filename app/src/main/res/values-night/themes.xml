@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#352689</item>
         <item name="colorSecondaryVariant">#3E25AE</item>
-        <item name="colorOnSecondary">#A09F99</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

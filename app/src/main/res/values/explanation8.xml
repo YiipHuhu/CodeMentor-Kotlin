@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="project_structure_summary">
+        A estrutura de um projeto Android é organizada para separar diferentes tipos de arquivos e facilitar o desenvolvimento, manutenção e escalabilidade do aplicativo.
+        Cada parte do projeto possui uma função específica no desenvolvimento de apps.
+    </string>
+
+    <string name="folders_title">Principais Pastas de um Projeto</string>
+    <string name="folders_description">
+        - manifests/: Contém o arquivo "AndroidManifest.xml", que define informações essenciais sobre o aplicativo, como atividades, permissões e temas.
+        - java/: Inclui o código-fonte Java ou Kotlin, divididos em pacotes. Aqui estão as atividades, fragments e outras classes.
+        - res/: Contém os recursos do app, como layouts, imagens, strings e cores.
+        - gradle/: Configurações e dependências do projeto, usadas pelo Android Studio para compilar e construir o aplicativo.
+    </string>
+
+    <string name="key_files_title">Arquivos Importantes no Projeto</string>
+    <string name="key_files">
+        - "build.gradle": Define dependências e configurações de compilação.
+        - "AndroidManifest.xml": Centraliza informações sobre o aplicativo.
+        - Arquivos em "res/layout/": Definem o design das interfaces visuais.
+        - Arquivos em "res/values/": Contêm strings reutilizáveis, cores, dimensões e estilos.
+    </string>
+
+    <string name="tips_title">Dicas para Trabalhar com a Estrutura</string>
+    <string name="tips">
+        - Organize o código em pacotes lógicos para maior clareza e escalabilidade.
+        - Use nomes descritivos para arquivos e recursos.
+        - Centralize valores compartilhados nos arquivos em "res/values".
+        - Evite duplicação de código usando herança e reuso de recursos.
+    </string>
+
+    <string name="footer_note8">
+        Compreender a estrutura de um projeto Android ajuda a acelerar o desenvolvimento e facilita a colaboração em equipe, garantindo um código mais organizado e eficiente.
+    </string>
+</resources>

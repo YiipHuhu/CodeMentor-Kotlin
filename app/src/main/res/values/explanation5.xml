@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="layout_summary">
+        Elementos comuns de layout no Android ajudam a criar interfaces visuais consistentes e funcionais. 
+        Eles incluem widgets e contêineres amplamente usados para organizar e exibir conteúdo de maneira eficiente.
+    </string>
+
+    <string name="layout_elements_title">Elementos Comuns</string>
+    <string name="layout_elements">
+        - TextView: Exibe texto estático ou dinâmico na tela.
+        - EditText: Permite entrada de texto pelo usuário.
+        - Button: Botão clicável para interações do usuário.
+        - ImageView: Exibe imagens na interface.
+        - RecyclerView: Lista ou grade de itens de forma eficiente, ideal para grandes quantidades de dados.
+        - ConstraintLayout: Contêiner flexível que permite posicionar elementos com restrições relativas.
+        - ScrollView: Permite rolagem de conteúdo em telas menores.
+    </string>
+
+    <string name="layout_tips_title">Dicas para um Bom Layout</string>
+    <string name="layout_tips">
+        - Use "ConstraintLayout" para criar layouts complexos com menos aninhamentos.
+        - Prefira "RecyclerView" em vez de "ListView" para listas dinâmicas.
+        - Otimize dimensões com "wrap_content" e "match_parent" para evitar layouts inconsistentes.
+        - Evite carregar imagens grandes diretamente; use bibliotecas como Glide ou Picasso.
+    </string>
+
+    <string name="footer_note5">
+        Conhecer os elementos de layout no Android é essencial para projetar interfaces intuitivas e responsivas. 
+        Aproveite os widgets e contêineres disponíveis para criar designs funcionais e visualmente atraentes.
+    </string>
+</resources> 

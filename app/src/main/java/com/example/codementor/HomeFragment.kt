@@ -38,13 +38,13 @@ class HomeFragment : Fragment() {
 
         moduloList = listOf(
             Modulos("Introdução a Kotlin", "Kotlin", "13m"),
-            Modulos("Declaração de variáveis em Kotlin", "Kotlin", "10m"),
+            Modulos("Tipos variáveis em Kotlin", "Kotlin", "10m"),
             Modulos("O que é RecyclerView", "Kotlin", "20m"),
-            Modulos("Tudo sobre Kotlin", "Kotlin", "30m"),
-            Modulos("Elementos comuns de um layout XML", "XML/Kotlin", "15m"),
-            Modulos("Layout e posicionamento de componentes", "XML/Kotlin", "30m"),
-            Modulos("Estilos e temas", "Kotlin", "25m"),
-            Modulos("Estrutura de um projeto Android em Kotlin", "Kotlin", "40m")
+            Modulos("Ciclos de vida", "Kotlin", "15m"),
+            Modulos("Elementos comuns de layout", "XML", "15m"),
+            Modulos("Posicionamento de componentes", "XML/Kotlin", "18m"),
+            Modulos("Estilos e temas", "Kotlin", "10m"),
+            Modulos("Estrutura de um projeto", "Kotlin", "20m")
         )
 
         filteredModuloList = moduloList.toMutableList()

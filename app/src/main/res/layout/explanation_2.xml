@@ -21,29 +21,28 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/logo_description"
         android:src="@drawable/logo_code"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/sora"
+        android:gravity="center"
         android:lineSpacingExtra="12sp"
         android:text="Tipos de Variáveis em Kotlin"
         android:textAlignment="center"
-        android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +54,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +71,7 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/numeric_variables_intro"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
@@ -83,18 +81,18 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/int_example_description"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/code_background"
+                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
                 android:padding="8dp"
                 android:text="@string/int_example_code"
-                android:textColor="@color/code_text"
+                android:textColor="#EDEDED"
                 android:textSize="15sp" />
 
             <!-- Exemplo de variável Double -->
@@ -105,18 +103,18 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/double_example_description"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/code_background"
+                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
                 android:padding="8dp"
                 android:text="@string/double_example_code"
-                android:textColor="@color/code_text"
+                android:textColor="#EDEDED"
                 android:textSize="15sp" />
 
             <!-- Exemplo de variável String -->
@@ -127,18 +125,18 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/string_example_description"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/code_background"
+                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
                 android:padding="8dp"
                 android:text="@string/string_example_code"
-                android:textColor="@color/code_text"
+                android:textColor="#EDEDED"
                 android:textSize="15sp" />
 
             <TextView
@@ -148,18 +146,18 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/boolean_example_description"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/code_background"
+                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
                 android:padding="8dp"
                 android:text="@string/boolean_example_code"
-                android:textColor="@color/code_text"
+                android:textColor="#EDEDED"
                 android:textSize="15sp" />
 
             <TextView
@@ -169,18 +167,18 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/char_example_description"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/code_background"
+                android:background="@drawable/input_text_style"
                 android:fontFamily="@font/sora"
                 android:padding="8dp"
                 android:text="@string/char_example_code"
-                android:textColor="@color/code_text"
+                android:textColor="#EDEDED"
                 android:textSize="15sp" />
 
             <TextView
@@ -190,7 +188,7 @@
                 android:fontFamily="@font/sora"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/variable_type_notes"
-                android:textColor="@color/black"
+                android:textColor="#EDEDED"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
@@ -202,7 +200,7 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/chat_button"
         android:src="@drawable/ic_chat"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="#4D2AB8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="30dp" />

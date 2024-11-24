@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>  
+    <string name="components_summary">  
+        Elementos de componentes no Android são os blocos fundamentais que tornam um aplicativo funcional e interativo.  
+        Eles incluem estruturas reutilizáveis que ajudam na criação de interfaces de usuário e na interação com o sistema.  
+    </string>
+
+    <string name="components_types_title">Tipos de Componentes</string>
+    <string name="components_types">  
+        - Activity: Representa uma única tela com interface gráfica.
+        - Fragment: Parte de uma interface que pode ser reutilizada em diferentes telas.
+        - View: Base de qualquer elemento gráfico, como botões, imagens ou caixas de texto.
+        - Service: Executa tarefas em segundo plano, como tocar música ou baixar arquivos.
+        - Broadcast Receiver: Recebe e responde a mensagens de outros aplicativos ou do sistema.
+        - Content Provider: Gerencia o compartilhamento de dados entre aplicativos.
+    </string>
+
+    <string name="components_tips_title">Dicas para Usar Componentes</string>
+    <string name="components_tips">  
+        - Mantenha as "Activities" simples, delegando lógica complexa para "ViewModel" ou classes auxiliares.
+        - Use "Fragments" para criar interfaces reutilizáveis e gerenciáveis.
+        - Evite sobrecarregar o uso de "Services"; prefira "WorkManager" para tarefas agendadas.
+        - Registre corretamente "Broadcast Receivers" para evitar vazamentos de memória.
+    </string>
+
+    <string name="footer_note6">
+        Dominar os componentes do Android é essencial para criar aplicativos bem estruturados e eficientes.  
+        Use-os de maneira estratégica para construir experiências de usuário robustas e intuitivas.  
+    </string>
+</resources> 
