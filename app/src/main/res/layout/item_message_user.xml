@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:background="@drawable/bubble_user"
+        android:fontFamily="@font/sora"
         android:padding="12dp"
         android:textColor="@color/black"
         android:textSize="16sp" />
