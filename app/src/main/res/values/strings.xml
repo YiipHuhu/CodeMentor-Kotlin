@@ -8,10 +8,10 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home"></string>
-    <string name="sobre1">O Codementor foi criado para facilitar o aprendizado, incentivar e guiar você no universo do Kotlin, a linguagem de programação amplamente utilizada no desenvolvimento mobile.</string>
-    <string name="sobre2">Aqui, você encontrará diversos módulos interativos com temas variados, projetados para aprimorar suas habilidades de programação. Além disso, o aplicativo conta com uma Inteligência Artificial integrada, pronta para esclarecer dúvidas e oferecer suporte personalizado ao seu aprendizado.</string>
-    <string name="sobre3">Este projeto foi desenvolvido por João, Carlos e Alan como parte de um trabalho acadêmico, com o objetivo de unir tecnologia e educação de forma prática e acessível.</string>
-    <string name="sobre4">Explore, aprenda e programe com o Codementor!</string>
+    <string name="sobre1">CodeMentor foi criado com o propósito de ajudar qualquer pessoa a aprender kotlin.</string>
+    <string name="sobre2">Diversos Módulos focados em ensinar de forma prática e intuitiva.</string>
+    <string name="sobre3">Além disso, contamos com uma Inteligência artifical  especializada em kotlin.</string>
+    <string name="sobre4">Criado para projeto escolar por: Alan, Carlos e João.</string>
     <string name="back_button">Voltar</string>
     <string name="logo_description">Logo do Aplicativo</string>
     <string name="chat_button">Botão para abrir o chat de IA</string>
