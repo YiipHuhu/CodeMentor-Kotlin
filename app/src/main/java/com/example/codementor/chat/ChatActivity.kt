@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +49,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var adapter: ChatAdapter
     private lateinit var editText: EditText
     private lateinit var buttonSend: ImageButton
+    private lateinit var promptContainer: LinearLayout
+    private lateinit var promptContainerTwo: LinearLayout
 
     private val messageHistory = mutableListOf<Message>() // Lista para armazenar o histórico de mensagens
 
@@ -80,6 +83,8 @@ class ChatActivity : AppCompatActivity() {
         val buttonResuma = findViewById<Button>(R.id.buttonResuma)
         val buttonExercicios = findViewById<Button>(R.id.buttonExercicios)
         val buttoncodigo = findViewById<Button>(R.id.buttoncodigo)
+        promptContainer = findViewById(R.id.promptContainer)
+        promptContainerTwo = findViewById(R.id.promptContainerTwo)
 
         buttonResuma.setOnClickListener {
             sendPredefinedMessage("Preciso que você crie um resumo para mim, por favor.")
@@ -106,6 +111,7 @@ class ChatActivity : AppCompatActivity() {
                 adapter.addMessage(ChatMessage(userMessage, true)) // Adiciona ao adaptador
                 recyclerView.scrollToPosition(adapter.itemCount - 1)
                 editText.text.clear()
+                hidePromptContainer()
                 sendMessageToApi(userMessage) // Envia para a API
             }
         }
@@ -158,6 +164,7 @@ class ChatActivity : AppCompatActivity() {
         messageHistory.add(userMessageObject)
         adapter.addMessage(ChatMessage(message, true))
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+        hidePromptContainer()
         sendMessageToApi(message)
     }
 
@@ -169,6 +176,10 @@ class ChatActivity : AppCompatActivity() {
     private fun generateMessageId(): String {
         // Gera um ID único para cada mensagem (pode ser adaptado conforme necessário)
         return System.currentTimeMillis().toString()
+    }
+    private fun hidePromptContainer() {
+        promptContainer.visibility = android.view.View.GONE
+        promptContainerTwo.visibility = android.view.View.GONE
     }
 }
 
