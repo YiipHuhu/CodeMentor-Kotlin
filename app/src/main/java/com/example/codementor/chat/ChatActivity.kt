@@ -94,9 +94,14 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun sendMessageToApi() {
+        // Mensagem temporária pro feedback visual
+        val typingMessage = ChatMessage("...", isUser = false)
+        adapter.addMessage(typingMessage)
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
+
         val chatRequest = ChatRequest(
-            context = mapOf("previous_response" to getLastResponse()), // passa a ultima resposta como contexto
-            messages = messageHistory, // Envia tudo o histórico
+            context = mapOf("previous_response" to getLastResponse()),
+            messages = messageHistory,
             temperature = 0.8,
             max_tokens = 1500
         )
@@ -104,6 +109,9 @@ class ChatActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val response = api.sendMessage(chatRequest)
+                // Remover aqueles ... da mensagem de feedback visual
+                adapter.removeMessage(typingMessage)
+
                 if (response.choices.isNotEmpty()) {
                     val aiMessage = response.choices.firstOrNull()?.message?.content
                         ?: "Resposta vazia da IA"
@@ -119,10 +127,13 @@ class ChatActivity : AppCompatActivity() {
                     adapter.addMessage(ChatMessage("Erro: Nenhuma escolha retornada", false))
                 }
             } catch (e: Exception) {
+                // Remove a mensagem de feedback e adiciona uma mensagem de erro
+                adapter.removeMessage(typingMessage)
                 adapter.addMessage(ChatMessage("Erro: ${e.localizedMessage}", false))
             }
         }
     }
+
 
     private fun getLastResponse(): String {
         // Retorna o conteúdo da última mensagem da IA, ou uma string vazia se não houver

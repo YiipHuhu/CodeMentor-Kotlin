@@ -38,6 +38,14 @@ class ChatAdapter(private val messages: MutableList<ChatMessage>) :
         notifyItemInserted(messages.size - 1)
     }
 
+    fun removeMessage(message: ChatMessage) {
+        val index = messages.indexOf(message)
+        if (index != -1) {
+            messages.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
+
     class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textMessage: TextView = itemView.findViewById(R.id.textMessage)
 

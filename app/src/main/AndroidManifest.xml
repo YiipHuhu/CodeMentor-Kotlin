@@ -22,7 +22,8 @@
             android:theme="@style/Theme.Codementor.NoActionBar"/>
 
         <activity android:name=".chat.ChatActivity"
-            android:theme="@style/Theme.Codementor.NoActionBar"/>
+            android:theme="@style/Theme.Codementor.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".AboutActivity"
             android:theme="@style/Theme.Codementor.NoActionBar"/>
