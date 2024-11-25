@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/sora"
-            android:text="Apelido"
+            android:text="Apelido *"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
