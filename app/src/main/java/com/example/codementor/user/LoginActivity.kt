@@ -78,24 +78,22 @@ class LoginActivity : AppCompatActivity() {
                             exception is FirebaseAuthInvalidCredentialsException -> {
                                 Toast.makeText(this, "Senha incorreta. Tente novamente.", Toast.LENGTH_SHORT).show()
                             }
+
                             exception is FirebaseAuthInvalidUserException -> {
                                 Toast.makeText(this, "Conta não encontrada. Verifique o email.", Toast.LENGTH_SHORT).show()
                             }
+
                             exception is FirebaseTooManyRequestsException -> {
                                 Toast.makeText(this, "Muitas tentativas falhas. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
-                            }
-                            else -> {
-                                // Outro erro
-                                Toast.makeText(this, "Erro: ${exception?.message}", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
                 }
-
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Formato de email incorreto!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(this, "Formato de email incorreto!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+        }
 
         registerTextView.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
