@@ -26,23 +26,14 @@ interface ChatApi {
 data class ChatRequest(
     val context: Map<String, String>,
     val messages: List<Message>,
-    val temperature: Double,
-    val max_tokens: Int
+    val temperature: Double = 0.8,
+    val max_tokens: Int = 1500
 )
 
 data class Message(val role: String, val id: String, val content: String)
-
-data class ChatResponse(
-    val choices: List<Choice>
-)
-data class Choice(
-    val index: Int,
-    val message: ChoiceMessage
-)
-data class ChoiceMessage(
-    val role: String,
-    val content: String
-)
+data class ChatResponse(val choices: List<Choice>)
+data class Choice(val message: ChoiceMessage)
+data class ChoiceMessage(val content: String)
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -50,136 +41,122 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var editText: EditText
     private lateinit var buttonSend: ImageButton
     private lateinit var promptContainer: LinearLayout
+    private lateinit var messageHistory: MutableList<Message>
     private lateinit var promptContainerTwo: LinearLayout
 
-    private val messageHistory = mutableListOf<Message>() // Lista para armazenar o histórico de mensagens
+    private val api: ChatApi by lazy { createChatApi() }
 
-    private val api: ChatApi by lazy {
-        Retrofit.Builder()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.chat)
+
+        initViews()
+        setupRecyclerView()
+        setupButtons()
+    }
+
+    private fun initViews() {
+        recyclerView = findViewById(R.id.recyclerViewChat)
+        editText = findViewById(R.id.editTextMessage)
+        buttonSend = findViewById(R.id.buttonSend)
+        promptContainer = findViewById(R.id.promptContainer)
+        promptContainerTwo = findViewById(R.id.promptContainerTwo)
+        findViewById<ImageView>(R.id.backButton).setOnClickListener { finish() }
+        messageHistory = mutableListOf()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ChatAdapter(mutableListOf())
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+    }
+
+    private fun setupButtons() {
+        buttonSend.setOnClickListener {
+            val userInput = editText.text.toString().trim()
+            if (userInput.isNotEmpty()) sendMessage(userInput)
+        }
+
+        listOf(
+            R.id.buttonResuma to "Preciso que você crie um resumo para mim, por favor.",
+            R.id.buttonExercicios to "Quais exercícios você sugere?",
+            R.id.buttoncodigo to "Preciso de ajuda com um código, você pode me ajudar?"
+        ).forEach { (buttonId, message) ->
+            findViewById<Button>(buttonId).setOnClickListener { sendMessage(message) }
+        }
+    }
+
+    private fun sendMessage(content: String) {
+        val userMessage = createMessage("user", content)
+        addMessageToUI(userMessage, true)
+        hidePromptContainer()
+        fetchResponseFromApi(content)
+    }
+
+    private fun fetchResponseFromApi(prompt: String) {
+        val typingMessage = addMessageToUI("...", false)
+        val chatRequest = ChatRequest(
+            context = mapOf("previous_response" to getLastResponse()),
+            messages = messageHistory
+        )
+
+        lifecycleScope.launch {
+            try {
+                val response = api.sendMessage(chatRequest)
+                removeMessageFromUI(typingMessage)
+                response.choices.firstOrNull()?.message?.content?.let {
+                    val aiMessage = createMessage("assistant", it)
+                    addMessageToUI(aiMessage, false)
+                } ?: addMessageToUI("Erro: Nenhuma resposta obtida", false)
+            } catch (e: Exception) {
+                removeMessageFromUI(typingMessage)
+                addMessageToUI("Erro: ${e.localizedMessage}", false)
+            }
+        }
+    }
+
+    private fun createMessage(role: String, content: String): Message {
+        val message = Message(role, System.currentTimeMillis().toString(), content)
+        messageHistory.add(message)
+        return message
+    }
+
+    private fun addMessageToUI(message: Any, isUser: Boolean): ChatMessage {
+        val chatMessage = when (message) {
+            is Message -> ChatMessage(message.content, isUser)
+            is String -> ChatMessage(message, isUser)
+            else -> throw IllegalArgumentException("Tipo inválido para mensagem")
+        }
+        adapter.addMessage(chatMessage)
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
+        return chatMessage
+    }
+
+    private fun removeMessageFromUI(chatMessage: ChatMessage) {
+        adapter.removeMessage(chatMessage)
+    }
+
+    private fun getLastResponse(): String =
+        messageHistory.lastOrNull { it.role == "assistant" }?.content.orEmpty()
+
+    private fun hidePromptContainer() {
+        promptContainer.visibility = android.view.View.GONE
+        promptContainerTwo.visibility = android.view.View.GONE
+    }
+
+    private fun createChatApi(): ChatApi {
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .hostnameVerifier { _, _ -> true }
+            .build()
+
+        return Retrofit.Builder()
             .baseUrl("https://fast-radically-minnow.ngrok-free.app")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
             .create(ChatApi::class.java)
     }
-    private val okHttpClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
-            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
-            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
-            .hostnameVerifier { _, _ -> true }
-            .build()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.chat)
-        findViewById<ImageView>(R.id.backButton).setOnClickListener {
-            finish()
-        }
-        recyclerView = findViewById(R.id.recyclerViewChat)
-        editText = findViewById(R.id.editTextMessage)
-        buttonSend = findViewById(R.id.buttonSend)
-        val buttonResuma = findViewById<Button>(R.id.buttonResuma)
-        val buttonExercicios = findViewById<Button>(R.id.buttonExercicios)
-        val buttoncodigo = findViewById<Button>(R.id.buttoncodigo)
-        promptContainer = findViewById(R.id.promptContainer)
-        promptContainerTwo = findViewById(R.id.promptContainerTwo)
-
-        buttonResuma.setOnClickListener {
-            sendPredefinedMessage("Preciso que você crie um resumo para mim, por favor.")
-        }
-
-        buttonExercicios.setOnClickListener {
-            sendPredefinedMessage("Quais exercícios você sugere?")
-        }
-
-        buttoncodigo.setOnClickListener {
-            sendPredefinedMessage("Preciso de ajuda com um código, você pode me ajudar?")
-        }
-
-
-        adapter = ChatAdapter(mutableListOf())
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
-        buttonSend.setOnClickListener {
-            val userMessage = editText.text.toString().trim()
-            if (userMessage.isNotEmpty()) {
-                val userMessageObject = Message(role = "user", id = generateMessageId(), content = userMessage)
-                messageHistory.add(userMessageObject) // Adiciona ao histórico
-                adapter.addMessage(ChatMessage(userMessage, true)) // Adiciona ao adaptador
-                recyclerView.scrollToPosition(adapter.itemCount - 1)
-                editText.text.clear()
-                hidePromptContainer()
-                sendMessageToApi(userMessage) // Envia para a API
-            }
-        }
-    }
-
-
-    private fun sendMessageToApi(prompt: String) {
-        // Adiciona feedback visual (mensagem de "digitando...")
-        val typingMessage = ChatMessage("...", isUser = false)
-        adapter.addMessage(typingMessage)
-        recyclerView.scrollToPosition(adapter.itemCount - 1)
-
-        val chatRequest = ChatRequest(
-            context = mapOf("previous_response" to getLastResponse()),
-            messages = messageHistory,
-            temperature = 0.8,
-            max_tokens = 1500
-        )
-
-        lifecycleScope.launch {
-            try {
-                val response = api.sendMessage(chatRequest)
-                // Remove a mensagem de feedback visual
-                adapter.removeMessage(typingMessage)
-
-                if (response.choices.isNotEmpty()) {
-                    val aiMessage = response.choices.firstOrNull()?.message?.content
-                        ?: "Resposta vazia da IA"
-
-                    // Adiciona a resposta da IA ao histórico
-                    val aiMessageObject = Message(role = "assistant", id = generateMessageId(), content = aiMessage)
-                    messageHistory.add(aiMessageObject)
-
-                    // Adiciona a mensagem da IA ao adaptador
-                    adapter.addMessage(ChatMessage(aiMessage, false))
-                    recyclerView.scrollToPosition(adapter.itemCount - 1)
-                } else {
-                    adapter.addMessage(ChatMessage("Erro: Nenhuma escolha retornada", false))
-                }
-            } catch (e: Exception) {
-                // Remove a mensagem de feedback e adiciona uma mensagem de erro
-                adapter.removeMessage(typingMessage)
-                adapter.addMessage(ChatMessage("Erro: ${e.localizedMessage}", false))
-            }
-        }
-    }
-
-    private fun sendPredefinedMessage(message: String) {
-        val userMessageObject = Message(role = "user", id = generateMessageId(), content = message)
-        messageHistory.add(userMessageObject)
-        adapter.addMessage(ChatMessage(message, true))
-        recyclerView.scrollToPosition(adapter.itemCount - 1)
-        hidePromptContainer()
-        sendMessageToApi(message)
-    }
-
-    private fun getLastResponse(): String {
-        // Retorna o conteúdo da última mensagem da IA, ou uma string vazia se não houver
-        return messageHistory.lastOrNull { it.role == "assistant" }?.content ?: ""
-    }
-
-    private fun generateMessageId(): String {
-        // Gera um ID único para cada mensagem (pode ser adaptado conforme necessário)
-        return System.currentTimeMillis().toString()
-    }
-    private fun hidePromptContainer() {
-        promptContainer.visibility = android.view.View.GONE
-        promptContainerTwo.visibility = android.view.View.GONE
-    }
 }
-
